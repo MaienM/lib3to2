@@ -16,8 +16,8 @@ class FixFstring(fixer_base.BaseFix):
     PATTERN = "STRING"
 
     def transform(self, node, results):
+        # Parse and check whether this is an fstring.
         astnode = ast.parse(node.value)
-        print(ast.dump(astnode))
         try:
             assert isinstance(astnode, ast.Module)
             assert len(astnode.body) == 1
@@ -26,14 +26,19 @@ class FixFstring(fixer_base.BaseFix):
         except AssertionError:
             return node
 
+        # Extract arguments, leaving the fstring with only positional arguments.
         joinedstr = astnode.body[0].value
         args = []
         self._process_joinedstr(joinedstr, args)
 
-        astnode.body[0] = ast.Expr(
+        # Convert fstring into regular string constant.
+        joinedstr = ast.parse(ast.unparse(joinedstr)[1:])
+
+        # Build expression that uses the format function (i.e. `joinedstr.format(*args)`).
+        astnode = ast.Expr(
             value=ast.Call(
                 func=ast.Attribute(
-                    value=ast.Constant(ast.unparse(joinedstr)[2:-1]),
+                    value=joinedstr,
                     attr='format'
                 ),
                 args=args,
@@ -42,7 +47,7 @@ class FixFstring(fixer_base.BaseFix):
         )
 
         new = node.clone()
-        new.value = ast.unparse(astnode)
+        new.value = ast.unparse(astnode).strip()
         return new
 
     @staticmethod

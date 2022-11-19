@@ -48,7 +48,7 @@ class FixFstring(fixer_base.BaseFix):
         self._process_joinedstr(joinedstr, args)
 
         # Convert fstring into regular string constant.
-        joinedstr = ast.parse(ast.unparse(joinedstr)[1:])
+        joinedstr = self._ast_parse(ast.unparse(joinedstr)[1:])
 
         # Build and return expression that uses the format function (i.e. `joinedstr.format(*args)`).
         astnode = ast.Expr(
@@ -62,7 +62,7 @@ class FixFstring(fixer_base.BaseFix):
             ),
         )
         new = node.clone()
-        new.value = ast.unparse(astnode).strip()
+        new.value = ast.unparse(astnode)
         return new
 
     @staticmethod

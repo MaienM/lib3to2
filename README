@@ -1,6 +1,7 @@
 Download
 ========
-Release for 2.7 and 3.x (last version I tested was 3.4.3): https://pypi.python.org/pypi/3to2
+
+Not yet released on pypi.
 
 Abstract
 ========
@@ -48,8 +49,9 @@ using lib3to2 is thoroughly tested.
 Repository
 ==========
 
-lib3to2 resides at http://bitbucket.org/amentajo/lib3to2, where the bug tracker
-can be found at http://bitbucket.org/amentajo/lib3to2/issues
+lib3to2 resides at https://github.com/MaienM/lib3to2, where the bug tracker can
+be found at https://github.com/MaienM/lib3to2/issues. It was originally located
+at http://bitbucket.org/amentajo/lib3to2.
 
 Usage
 =====

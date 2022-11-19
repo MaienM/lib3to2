@@ -53,3 +53,7 @@ class Test_fstring(lib3to2FixerTestCase):
         a = '''"""{0}\\\\n""".format(foo)'''
         self.check(b, a)
 
+    def test_fstring_concat(self):
+        b = '''"{foo}=" f"{foo}" " {bar}=" f"{bar}"'''
+        a = '''"""{{foo}}={0} {{bar}}={1}""".format(foo, bar)'''
+        self.check(b, a)

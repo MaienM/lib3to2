@@ -1,7 +1,7 @@
 from lib3to2.tests.support import lib3to2FixerTestCase
 
-class Test_annotations(lib3to2FixerTestCase):
-    fixer = "annotations"
+class Test_function_annotations(lib3to2FixerTestCase):
+    fixer = "function_annotations"
 
     def test_return_annotations_alone(self):
         b = "def foo() -> 'bar': pass"

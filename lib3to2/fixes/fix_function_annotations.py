@@ -11,7 +11,7 @@ warning_text = "Removing function annotations completely."
 def param_without_annotations(node):
     return node.children[0]
 
-class FixAnnotations(fixer_base.BaseFix):
+class FixFunctionAnnotations(fixer_base.BaseFix):
 
     warned = False
 

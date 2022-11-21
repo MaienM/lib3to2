@@ -44,6 +44,11 @@ class Test_fstring(lib3to2FixerTestCase):
         a = """'{0!r:20}'.format(1 + 1)"""
         self.check(b, a)
 
+    def test_fstring_debugging(self):
+        b = '''f"{foo=} {bar = }"'''
+        a = """'foo={0!r} bar = {1!r}'.format(foo, bar)"""
+        self.check(b, a)
+
     def test_fstring_escaped_braces(self):
         b = '''f"{foo}{{bar}}"'''
         a = """'{0}{{bar}}'.format(foo)"""

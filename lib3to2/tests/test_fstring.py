@@ -3,6 +3,12 @@ from lib3to2.tests.support import lib3to2FixerTestCase
 class Test_fstring(lib3to2FixerTestCase):
     fixer = "fstring"
 
+    def check(self, b, a, data={ 'foo': 42, 'bar': 3.14 }):
+        super().check(b, a)
+        bval = eval(b, globals(), data)
+        aval = eval(a, globals(), data)
+        self.assertEquals(bval, aval)
+
     def test_fstring_regular_string(self):
         b = '''"{foo}"'''
         a = b
@@ -24,18 +30,18 @@ class Test_fstring(lib3to2FixerTestCase):
         self.check(b, a)
 
     def test_fstring_format_spec(self):
-        b = '''f"{foo:l}"'''
-        a = """'{0:l}'.format(foo)"""
+        b = '''f"{foo:20}"'''
+        a = """'{0:20}'.format(foo)"""
         self.check(b, a)
 
     def test_fstring_format_spec_nested(self):
-        b = '''f"{foo:0{bar}0}"'''
-        a = """'{0:0{1}0}'.format(foo, bar)"""
+        b = '''f"{bar:0{foo}0}"'''
+        a = """'{0:0{1}0}'.format(bar, foo)"""
         self.check(b, a)
 
     def test_fstring_complex(self):
-        b = '''f"{(1 + 1)!r:l}"'''
-        a = """'{0!r:l}'.format(1 + 1)"""
+        b = '''f"{(1 + 1)!r:20}"'''
+        a = """'{0!r:20}'.format(1 + 1)"""
         self.check(b, a)
 
     def test_fstring_escaped_braces(self):

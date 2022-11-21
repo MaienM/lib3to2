@@ -57,3 +57,8 @@ class Test_fstring(lib3to2FixerTestCase):
         b = '''"{foo}=" f"{foo}" " {bar}=" f"{bar}"'''
         a = """'{{foo}}={0} {{bar}}={1}'.format(foo, bar)"""
         self.check(b, a)
+
+    def test_fstring_concat_multiline(self):
+        b = '''("{foo}=" f"{foo}"\n" {bar}="\n\nf"{bar}")'''
+        a = """('{{foo}}={0} {{bar}}={1}'.format(foo, bar))"""
+        self.check(b, a)
